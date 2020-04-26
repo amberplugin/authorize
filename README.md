@@ -2,9 +2,9 @@
 
 Amber web framework plugin to provide Devise like features e.g invitable, lockable, trackable, confirmable, password reset etc.
 
-__Amber is a web application framework written in Crystal inspired by Kemal, Rails, Phoenix and other popular application frameworks.
+Amber is a web application framework written in Crystal inspired by Kemal, Rails, Phoenix and other popular application frameworks.
 
-The purpose of Amber is not to create yet another framework, but to take advantage of the beautiful Crystal language capabilities and provide engineers and the Crystal community with an efficient, cohesive, well maintained web framework that embraces the language philosophies, conventions, and guidelines.__
+The purpose of Amber is not to create yet another framework, but to take advantage of the beautiful Crystal language capabilities and provide engineers and the Crystal community with an efficient, cohesive, well maintained web framework that embraces the language philosophies, conventions, and guidelines.
 
 Amber web framework includes code generation tools to create standard CRUD web application scaffolding.  Recipes provide a powerful mechanism to generate Amber applications that go beyond the standard CRUD application such as generating SPA web applications.
 
