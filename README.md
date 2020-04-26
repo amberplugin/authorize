@@ -20,7 +20,7 @@ Add this to the dependencies section of your applications's shard.yml
     github: damianham/amber_render_module
     version: ~> 0.1.3
 ```
-**IMPORTANT!!** The authorize plugin assumes that the user record that stores application user identities is the **User** class.  In the extremly rare event that this is not the case you will have to replace all instances of __User__ in the plugin with the class name you use to store user identities and change the name of the user identity table in the database migration.
+**IMPORTANT!!** The authorize plugin assumes that the user record that stores application user identities in the **User** class.  In the extremly rare event that this is not the case you will have to replace all instances of __User__ in the plugin with the class name you use to store user identities and change the name of the user identity table in the database migration.
 
 ## Installation
 ```
@@ -40,10 +40,9 @@ Configure authorize plugin in **src/plugins/initializers/authorize.cr**, in part
 
 Authorize plugin provides a number of hooks that perform before and after event processing.  Each authorize plugin feature provides a different set of hooks.
 
-Override Invitable hooks in **src/plugins/hooks/invitable_hooks.cr** (optional).
-Override Lockable hooks in **src/plugins/hooks/lockable_hooks.cr** (optional).
+Override Invitable hooks in **src/plugins/hooks/invitable_hooks.cr** (optional).  See __plugins/authorize/invitable/_hooks.cr__ to see what hook overrides are available.
 
-See __plugins/authorize/invitable/_hooks.cr__ to see what hook overrides are available.
+- Override Lockable hooks in **src/plugins/hooks/lockable_hooks.cr** (optional).  See __plugins/authorize/lockable/_hooks.cr__ to see what hook overrides are available.
 
 ### Migration
 This plugin includes a migration to add columns to the User table.
@@ -54,7 +53,7 @@ $ amber db migrate
 ### Modify User class
 The User class should ideally have a __#name__ method that returns the user's name so in emails the person can be addressed by name rather than "Friend".
 
-#### Include plugin database columns
+#### Include plugin macros
 
 Change the User class __src/models/user.cr__ and add
 ```
@@ -96,11 +95,12 @@ For the Lockable feature change the create method  in __src/controllers/session_
 ```
   def create
     user = User.find_by(email: params["email"].to_s)
-    if user && user.authenticate(params["password"].to_s) && !user.is_locked?
+    if user && user.authenticate(params["password"].to_s) && !user.is_locked? # <-- add this test
       session[:user_id] = user.id
       flash[:info] = "Successfully logged in"
       redirect_to "/"
     else
+      # Change the flash error message accordingly
       flash[:danger] = (user && user.is_locked?) ? "Account is locked" : "Invalid email or password"
       user = User.new
       render("new.slang")
@@ -111,7 +111,7 @@ For the Lockable feature change the create method  in __src/controllers/session_
 
 ### Email templates
 
-Some authorize features have email templates that are sent to end users.  Edit the templates in __plugin/authorize/mailers__ to suit your web application.
+Some authorize features have mailer email templates that are sent to users.  Edit the templates in __plugins/authorize/mailers__ to suit your web application.
 
 
 ## Using authorize plugin
@@ -176,7 +176,8 @@ As a signed in system administrator
 
 ## Contributing
 
-Contributing to Amber can be a rewarding way to learn, teach, and build experience in just about any skill you can imagine. You don’t have to become a lifelong contributor to enjoy participating in Amber or Amber plugins.  Help us extend this plugin to cover more authorization features.
+Contributing to Amber can be a rewarding way to learn, teach, and build experience in just about any skill you can imagine. You don’t have to become a lifelong contributor to enjoy participating in Amber or Amber plugins.  Contribute to the Amber eco-system to make it the best web application
+framework on the planet.  Help us extend this plugin to cover more authorization features, or create your own plugin.  See the Amber framework [plugin](https://docs.amberframework.org/amber/cli/recipes) documentation for information about creating and using plugins.
 
 Code Triage? Join us on [codetriage](https://www.codetriage.com/amberplugin/authorize).
 
