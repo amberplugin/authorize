@@ -1,0 +1,12 @@
+<h1>Hello <%= name %></h1>
+
+<p>Thank you for registering with us.</p>
+
+<p>Please click on this link to confirm your email address. 
+  <%= link_to("Confirm your email address", "#{ host }/authorize/confirm/#{ token }") %>
+</p>
+
+<p>
+Best regards<br/>
+<%= who %>
+</p>

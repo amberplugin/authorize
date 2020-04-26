@@ -1,0 +1,17 @@
+<h1>New Invitation</h1>
+
+<form action="/authorize/invite" method="post">
+  <%= csrf_tag %>
+  <div class="form-group">
+    <%= label(:name) -%>
+    <%= text_field(name: :name, type: :text, placeholder: "Your Friend's Name", class: "form-control") -%>
+  </div>
+ 
+  <div class="form-group">
+    <%= label(:email) -%>
+    <%= text_field(name: :email, type: :email, placeholder: "Your Friend's Email", class: "form-control") -%>
+  </div>
+ 
+  <%= submit("Submit", class: "btn btn-primary btn-xs") -%>
+
+</form>

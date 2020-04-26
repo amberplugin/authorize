@@ -1,0 +1,20 @@
+class ConfirmationMailer < Quartz::Composer
+  getter token
+
+  def sender
+    address email: from, name: who
+  end
+
+  def initialize(name : String, email : String, options : Hash)
+    @token = options[:token]
+    @host  = options[:host]
+    @from = options[:from]
+    @who = options[:who]
+    to email: email, name: name # Can be called multiple times to add more recipients
+
+    subject "Please confirm your email address"
+
+    text render_module("confirm_mailer.text.ecr")
+    html render_module("confirm_mailer.html.{{language}}", layout: "mailer.html.{{language}}")
+  end
+end

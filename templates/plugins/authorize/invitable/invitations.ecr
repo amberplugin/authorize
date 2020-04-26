@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-sm-11">
+    <h2>Invitations</h2>
+  </div>
+  <div class="col-sm-1">
+    <a class="btn btn-success btn-xs" href="/authorize/invite">New</a>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+
+        <th>Name</th>
+        <th>Email</th>
+
+        <th>Actions</th>
+      </tr>
+    <tbody>
+    <%- users.each do |user| %>
+      <tr>
+
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+
+        <td>
+          <span>
+            <%= link_to("resend", "/authorize/invite/resend/#{token}", class: "btn btn-success btn-xs") -%>
+            <%= link_to("delete", "/authorize/invite/delete/#{token}?_method=delete&_csrf=#{csrf_token}", class: "btn btn-danger btn-xs", onclick: "return confirm('Are you sure?');") -%>
+          </span>
+        </td>
+      </tr>
+    <%- end %>
+    </tbody>
+  </table>
+</div>

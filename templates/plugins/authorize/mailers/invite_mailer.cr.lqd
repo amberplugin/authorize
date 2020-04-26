@@ -1,0 +1,31 @@
+require "jasper_helpers"
+class Authorize::InviteMailer < Quartz::Composer
+  include JasperHelpers
+
+  getter token : String
+  getter name : String
+  getter host : String
+  getter from : String
+  getter who : String
+  getter inviter : User
+
+  def sender
+    address email: from, name: who
+  end
+
+  def initialize(name : String, email : String, options : Hash)
+    @name = name
+    @token = options[:token].to_s
+    @host  = options[:host].to_s
+    @from = options[:from].to_s
+    @who = options[:who].to_s
+    @inviter = options[:inviter].as(User)
+    
+    to email: email, name: name # Can be called multiple times to add more recipients
+
+    subject "Invitation from " + (inviter.responds_to?(:name) ? inviter.name : "your friend")
+
+    text render_module("invite_mailer.text.ecr")
+    html render_module("invite_mailer.html.{{language}}", layout: "mailer.html.{{language}}")
+  end
+end

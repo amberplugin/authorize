@@ -1,0 +1,27 @@
+<h1>Accept Invitation</h1>
+
+<form action="/authorize/invite/update/#{token}" method="post">
+  <%= csrf_tag %>
+  <div class="form-group">
+    <%= label(:name) -%>
+    <%= text_field(name: :name, value: user.name, placeholder: "Your full name", class: "form-control") -%>
+  </div>
+ 
+  <div class="form-group">
+    <%= label(:email) -%>
+    <%= text_field(name: :email, type: :email, value: user.original_email,  placeholder: "Email", class: "form-control") -%>
+  </div>
+
+  <div class="form-group">
+    <%= label(:password) -%>
+    <%= text_field(name: :password, type: :password, placeholder: "Password", class: "form-control") -%>
+  </div>
+
+  <div class="form-group">
+    <%= label(:confirm_password) -%>
+    <%= text_field(name: :confirm_password, type: :password, placeholder: "Confirm Password", class: "form-control") -%>
+  </div>
+ 
+  <%= submit("Submit", class: "btn btn-primary btn-xs") -%>
+
+</form>

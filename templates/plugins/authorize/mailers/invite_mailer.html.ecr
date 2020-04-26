@@ -1,0 +1,13 @@
+<h1>Hello <%= name %></h1>
+
+<p>You have been invited to join our wonderful website by <%= inviter.name %>.</p>
+
+<p>Click on this link to  
+  <%= link_to("accept this invitation", "#{ host }/authorize/invite/accept/#{ token }") %> 
+  and get started.
+</p>
+
+<p>
+Best regards<br/>
+<%= who %>
+</p>
