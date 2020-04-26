@@ -1,2 +1,3 @@
 # authorize
-Devise like features for inviting, blocking, tracking, password reset etc.
+
+Amber web framework plugin to provide Devise like features e.g invitable, lockable, trackable, confirmable, password reset etc.
