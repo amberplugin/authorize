@@ -40,7 +40,7 @@ Configure authorize plugin in **src/plugins/initializers/authorize.cr**, in part
 
 Authorize plugin provides a number of hooks that perform before and after event processing.  Each authorize plugin feature provides a different set of hooks.
 
-Override Invitable hooks in **src/plugins/hooks/invitable_hooks.cr** (optional).  See __plugins/authorize/invitable/_hooks.cr__ to see what hook overrides are available.
+- Override Invitable hooks in **src/plugins/hooks/invitable_hooks.cr** (optional).  See __plugins/authorize/invitable/_hooks.cr__ to see what hook overrides are available.
 
 - Override Lockable hooks in **src/plugins/hooks/lockable_hooks.cr** (optional).  See __plugins/authorize/lockable/_hooks.cr__ to see what hook overrides are available.
 
@@ -200,6 +200,7 @@ Amber is a community effort and we want You to be part of it. [Join Amber Commun
 
 - Omniauthable, e.g. Oauth via google, facebook, github, twitter etc.
 - Recoverable
+- 2 factor authentication
 - tests
 
 ## License
