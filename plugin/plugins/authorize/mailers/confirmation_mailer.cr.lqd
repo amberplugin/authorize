@@ -14,7 +14,7 @@ class ConfirmationMailer < Quartz::Composer
 
     subject "Please confirm your email address"
 
-    text render_module("confirm_mailer.text.ecr")
+    text render_module("confirm_mailer.text.ecr", layout: nil)
     html render_module("confirm_mailer.html.{{language}}", layout: "mailer.html.{{language}}")
   end
 end

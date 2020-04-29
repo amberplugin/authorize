@@ -33,14 +33,13 @@ module Authorize::Models
     # Adds methods to set token & send confirmation email.
     # - `before_create` - generates token and saves it to user;
     # - `after_create` - sends out user email
-    macro with_confirmation(skip_validation = false)
+    # and adds columns for confirmation data
+    macro with_authorize_confirmable(skip_validation = false)
       {% if !skip_validation %}
         before_create :generate_confirmation_token
         after_create :send_confirmation_instructions
       {% end %}
-    end
 
-    macro with_authorize_confirmable
       column confirmation_sent_at : Time?
       column confirmed : Bool?
       column confirmed_at : Time?
@@ -147,6 +146,15 @@ module Authorize::Models
       (Time.utc > sent_at + Authorize.configuration.confirm_within.days)
     end
 
+    def get_config
+      { 
+        Authorize.configuration.mailer_class, 
+        Authorize.configuration.link_host,
+        Authorize.configuration.from,
+        Authorize.configuration.who
+      }
+    end
+
     # Send confirmation email.
     #
     # Mutating Method.
@@ -155,11 +163,15 @@ module Authorize::Models
     #   - `user.send_confirmation_instructions # returns true/false`
     #
     def send_confirmation_instructions
-      (mailer_class = Authorize.configuration.mailer_class) ? (return unless mailer_class) : return
+      mailer_class, link_host, from, who = get_config
 
       (token = confirmation_token) ? (return unless token) : return
 
-      mailer_class.new.confirmation_instructions(self, token)
+      return unless mailer_class != nil      
+
+      mailer_class.new.confirmation_instructions(self, {
+        :token => token, :host => link_host, :from => from, :who => who
+      })
       self.confirmation_sent_at = Time.utc
       save
     end

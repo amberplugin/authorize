@@ -23,9 +23,6 @@ Amber::Server.configure do |app|
     post "/invite", Authorize::InvitableController, :create
     get "/invite/resend/:invitation_token", Authorize::InvitableController, :resend
     delete "/invite/delete/:invitation_token", Authorize::InvitableController, :delete
-
-    # confirmable module
-    get "/confirm/:confirmation_token", Authorize::ConfirmableController, :confirm
   end
 
   pipeline :authorize_admin do
@@ -71,6 +68,7 @@ Amber::Server.configure do |app|
     get "/invite/decline/:invitation_token", Authorize::InvitableController, :decline
     post "/invite/update/:invitation_token", Authorize::InvitableController, :update
     get "/unlocktoken/:unlock_token", Authorize::LockableController, :unlock_token
+    get "/confirm/:confirmation_token", Authorize::ConfirmableController, :confirm
   end
   
 end

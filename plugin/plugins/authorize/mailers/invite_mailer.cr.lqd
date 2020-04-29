@@ -25,7 +25,7 @@ class Authorize::InviteMailer < Quartz::Composer
 
     subject "Invitation from " + (inviter.responds_to?(:name) ? inviter.name : "your friend")
 
-    text render_module("invite_mailer.text.ecr")
+    text render_module("invite_mailer.text.ecr", layout: nil)
     html render_module("invite_mailer.html.{{language}}", layout: "mailer.html.{{language}}")
   end
 end
